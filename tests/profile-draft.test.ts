@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { adultCutoff, toPayload, validateFields, type ProfileDraft } from "@/lib/profile-draft";
+import { adultCutoff, interestedInFor, toPayload, validateFields, type ProfileDraft } from "@/lib/profile-draft";
 
 const draft: ProfileDraft = {
   name: "Aarav",
@@ -45,5 +45,14 @@ describe("profile draft", () => {
 
   it("computes the 18+ cutoff for the date picker", () => {
     expect(adultCutoff(new Date(2026, 8, 28))).toBe("2008-09-28");
+  });
+});
+
+describe("gender-based discovery", () => {
+  it("derives who you see from your gender, ignoring any stored choice", () => {
+    expect(interestedInFor("Man")).toEqual(["Woman"]);
+    expect(interestedInFor("Woman")).toEqual(["Man"]);
+    expect(interestedInFor("Non-binary")).toEqual(["Everyone"]);
+    expect(toPayload({ ...draft, gender: "Woman", interestedIn: ["Woman"] }).interestedIn).toEqual(["Man"]);
   });
 });

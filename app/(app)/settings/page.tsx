@@ -21,7 +21,6 @@ export default async function SettingsPage() {
     <SettingsView
       userId={viewer.id}
       email={viewer.email}
-      interestedIn={viewer.interestedIn}
       isActive={viewer.isActive}
       instagram={viewer.instagram}
       whatsapp={viewer.whatsapp}

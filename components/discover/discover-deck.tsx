@@ -39,6 +39,8 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
   const [match, setMatch] = useState<{ matchId: string; profile: DiscoverProfile } | null>(null);
 
   const seen = useRef(new Set<string>());
+  // Passed this visit. Passes aren't permanent: "Check again" (and the next visit) brings them back.
+  const passed = useRef(new Set<string>());
   const pending = useRef(new Set<Promise<void>>());
   const fetching = useRef(false);
   const flying = useRef(false);
@@ -91,6 +93,7 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
   const commit = useCallback(
     (decision: SwipeDecision, card: DiscoverProfile) => {
       seen.current.add(card.id);
+      if (decision === "PASS") passed.current.add(card.id);
       removeLike(card.id);
       setQueue((current) => current.filter((p) => p.id !== card.id));
       setPhoto(0);
@@ -103,6 +106,7 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
           // Already swiped (e.g. another tab) or the person became unavailable: nothing to restore.
           if (error.code === "23505" || error.message.includes("Profile unavailable")) return;
           seen.current.delete(card.id);
+          passed.current.delete(card.id);
           setQueue((current) => [card, ...current.filter((p) => p.id !== card.id)]);
           toast({ tone: "error", message: `Couldn’t save that. ${card.name} is back on top — try again.` });
           return;
@@ -177,6 +181,9 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
   }, []);
 
   const retry = () => {
+    // Let everyone passed this visit come round again; the server lists them after unseen people.
+    for (const id of passed.current) seen.current.delete(id);
+    passed.current.clear();
     setStatus("loading");
     void fetchMore();
   };
@@ -257,7 +264,7 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
             <div className="flex h-full items-center justify-center">
               <EmptyState
                 title="You’ve caught up."
-                body="More people are joining the dance floor. Check back soon."
+                body="More people are joining the dance floor. Tap below to see the people you passed again."
                 action={
                   <Button variant="secondary" size="md" onClick={retry}>
                     Check again

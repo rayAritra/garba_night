@@ -11,7 +11,7 @@ import { SectionLabel } from "@/components/ui/glass-panel";
 import { BackIcon } from "@/components/ui/icons";
 import { useToast } from "@/components/ui/toast";
 import { ImageUploader, MIN_PHOTOS } from "@/components/profile/image-uploader";
-import { BasicsFields, InterestsPicker, PreferencesFields, SocialsFields } from "@/components/profile/profile-fields";
+import { BasicsFields, InterestsPicker, SocialsFields } from "@/components/profile/profile-fields";
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
@@ -36,7 +36,7 @@ export function ProfileEditor({ userId, initial, catalog }: { userId: string; in
   const dirty = JSON.stringify(draft) !== JSON.stringify(initial);
 
   const save = () => {
-    const found = validateFields(draft, ["name", "dateOfBirth", "gender", "year", "department", "bio", "interests", "interestedIn", "instagram", "whatsapp"]);
+    const found = validateFields(draft, ["name", "dateOfBirth", "gender", "year", "department", "bio", "interests", "instagram", "whatsapp"]);
     setErrors(found);
     if (draft.photos.length < MIN_PHOTOS) return setFormError(`Add at least ${MIN_PHOTOS} photos.`);
     if (Object.keys(found).length) {
@@ -76,9 +76,6 @@ export function ProfileEditor({ userId, initial, catalog }: { userId: string; in
         </Section>
         <Section id="interests" title="Interests">
           <InterestsPicker draft={draft} set={set} errors={errors} catalog={catalog} />
-        </Section>
-        <Section id="preferences" title="Discovery">
-          <PreferencesFields draft={draft} set={set} errors={errors} />
         </Section>
         <Section id="socials" title="Socials">
           <SocialsFields draft={draft} set={set} errors={errors} />

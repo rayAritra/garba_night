@@ -46,7 +46,19 @@ export function toPayload(draft: ProfileDraft) {
   void photos;
   const instagram = fields.instagram.trim().replace(/^@/, "");
   const whatsapp = fields.whatsapp.replace(/[\s()-]/g, "");
-  return { ...fields, instagram, whatsapp, shareInstagram: fields.shareInstagram && Boolean(instagram), shareWhatsapp: fields.shareWhatsapp && Boolean(whatsapp) };
+  return {
+    ...fields,
+    interestedIn: interestedInFor(fields.gender),
+    instagram,
+    whatsapp,
+    shareInstagram: fields.shareInstagram && Boolean(instagram),
+    shareWhatsapp: fields.shareWhatsapp && Boolean(whatsapp),
+  };
+}
+
+/** Discovery is by gender (men ↔ women), so the stored preference is derived, not chosen. */
+export function interestedInFor(gender: string) {
+  return gender === "Man" ? ["Woman"] : gender === "Woman" ? ["Man"] : ["Everyone"];
 }
 
 const FRIENDLY: Record<DraftField, string> = {

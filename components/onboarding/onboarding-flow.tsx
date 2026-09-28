@@ -8,12 +8,12 @@ import { createClient } from "@/lib/supabase/client";
 import { PHOTO_BUCKET } from "@/lib/photos";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { GlowOrb, SectionLabel } from "@/components/ui/glass-panel";
+import { GlowOrb } from "@/components/ui/glass-panel";
 import { BackIcon } from "@/components/ui/icons";
 import { Skeleton } from "@/components/ui/states";
 import { useToast } from "@/components/ui/toast";
 import { ImageUploader, MIN_PHOTOS } from "@/components/profile/image-uploader";
-import { BasicsFields, InterestsPicker, PreferencesFields, SocialsFields } from "@/components/profile/profile-fields";
+import { BasicsFields, InterestsPicker, SocialsFields } from "@/components/profile/profile-fields";
 
 const STEPS: { fields: DraftField[]; title: ReactNode; lede: string }[] = [
   {
@@ -46,13 +46,13 @@ const STEPS: { fields: DraftField[]; title: ReactNode; lede: string }[] = [
     lede: "Pick up to five. We’ll show them on your card.",
   },
   {
-    fields: ["interestedIn", "instagram", "whatsapp"],
+    fields: ["instagram", "whatsapp"],
     title: (
       <>
-        Who are you <span className="serif text-[40px] text-saffron">looking for?</span>
+        Stay in <span className="serif text-[40px] text-saffron">touch.</span>
       </>
     ),
-    lede: "Then add socials if you like — they stay hidden unless you share them with matches.",
+    lede: "Optional. Your socials stay hidden unless you choose to share them with your matches.",
   },
 ];
 
@@ -187,15 +187,7 @@ function Flow({ userId, initial, catalog }: { userId: string; initial: ProfileDr
             />
           ) : null}
           {step === 2 ? <InterestsPicker draft={draft} set={set} errors={errors} catalog={catalog} /> : null}
-          {step === 3 ? (
-            <div className="flex flex-col gap-8">
-              <PreferencesFields draft={draft} set={set} errors={errors} />
-              <div className="flex flex-col gap-3">
-                <SectionLabel>Socials</SectionLabel>
-                <SocialsFields draft={draft} set={set} errors={errors} />
-              </div>
-            </div>
-          ) : null}
+          {step === 3 ? <SocialsFields draft={draft} set={set} errors={errors} /> : null}
         </div>
       </main>
 

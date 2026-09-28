@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, type ReactNode } from "react";
-import { GENDERS, MAX_INTERESTS, SHOW_ME, YEARS } from "@/lib/constants";
+import { GENDERS, MAX_INTERESTS, YEARS } from "@/lib/constants";
 import { adultCutoff, type FieldErrors, type ProfileDraft } from "@/lib/profile-draft";
 import { cn } from "@/lib/utils";
 import { InterestChip } from "@/components/ui/chip";
@@ -113,23 +113,6 @@ export function InterestsPicker({ draft, set, errors, catalog }: Props & { catal
         {errors.interests ?? `${picked.length} of ${MAX_INTERESTS} picked`}
       </p>
     </div>
-  );
-}
-
-export function PreferencesFields({ draft, set, errors }: Props) {
-  return (
-    <ChoiceChips
-      legend="Show me"
-      multiple
-      options={SHOW_ME}
-      value={draft.interestedIn}
-      error={errors.interestedIn}
-      onChange={(next) => {
-        // "Everyone" is exclusive: picking it clears the rest, picking anything else clears it.
-        const added = next.find((v) => !draft.interestedIn.includes(v));
-        set({ interestedIn: added === "Everyone" ? ["Everyone"] : next.filter((v) => v !== "Everyone") });
-      }}
-    />
   );
 }
 

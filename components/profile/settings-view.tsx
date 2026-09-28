@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useId, useState, useTransition, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { logout } from "@/app/actions";
-import { SHOW_ME } from "@/lib/constants";
 import { PHOTO_BUCKET } from "@/lib/photos";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -20,7 +19,6 @@ export type BlockedProfile = { id: string; name: string | null };
 type Props = {
   userId: string;
   email: string;
-  interestedIn: string[];
   isActive: boolean;
   instagram: string | null;
   whatsapp: string | null;
@@ -78,7 +76,6 @@ export function SettingsView(props: Props) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [deleting, startDelete] = useTransition();
 
-  const showMe = props.interestedIn.includes("Everyone") ? "Everyone" : SHOW_ME.filter((o) => props.interestedIn.includes(o.value)).map((o) => o.label).join(", ") || "Not set";
 
   const update = async (patch: Partial<typeof prefs>) => {
     const previous = prefs;
@@ -135,7 +132,6 @@ export function SettingsView(props: Props) {
         </Group>
 
         <Group id="discovery" title="Discovery">
-          <LinkRow href="/profile/edit#preferences" label="Show me" value={showMe} />
           <SwitchRow label="Pause discovery" hint={prefs.isActive ? undefined : "You’re hidden from Discover. Matches can still chat."} checked={!prefs.isActive} onChange={(paused) => void update({ isActive: !paused })} />
         </Group>
 
