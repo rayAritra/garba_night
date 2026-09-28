@@ -71,7 +71,11 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
     fetching.current = true;
     // Let in-flight swipes land first so the server doesn't hand those people back.
     await Promise.allSettled([...pending.current]);
-    const { data, error } = await supabase.rpc("get_discover_profiles", { p_limit: BATCH_SIZE });
+    // Tell the server who's already been shown this visit so paging always reaches everyone.
+    const exclude = [...new Set([...seen.current, ...queueRef.current.map((p) => p.id)])];
+    let { data, error } = await supabase.rpc("get_discover_profiles", { p_limit: BATCH_SIZE, p_exclude: exclude });
+    // Before migration 0008 the function has no p_exclude parameter.
+    if (error?.code === "PGRST202") ({ data, error } = await supabase.rpc("get_discover_profiles", { p_limit: BATCH_SIZE }));
     fetching.current = false;
     if (error) {
       setStatus("error");
@@ -100,6 +104,8 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
       // Refill while a few cards remain so the deck never visibly runs dry mid-swipe.
       const remaining = queueRef.current.filter((p) => p.id !== card.id).length;
       if (remaining <= REFILL_AT && statusRef.current === "idle") void fetchMore();
+      // Already liked: a like can't change, so swiping them again just moves on.
+      if (card.liked_by_me) return;
       const request = (async () => {
         const { data, error } = await supabase.rpc("submit_swipe", { p_target: card.id, p_direction: decision });
         if (error) {
@@ -181,8 +187,8 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
   }, []);
 
   const retry = () => {
-    // Let everyone passed this visit come round again; the server lists them after unseen people.
-    for (const id of passed.current) seen.current.delete(id);
+    // Start the list over: everyone comes round again (unseen first, then passed, then liked).
+    seen.current.clear();
     passed.current.clear();
     setStatus("loading");
     void fetchMore();
@@ -254,6 +260,11 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
                           <LikeIcon size={14} />
                           Likes you
                         </span>
+                      ) : top.liked_by_me ? (
+                        <span className="absolute top-7 right-3.5 z-10 inline-flex h-8 items-center gap-1.5 rounded-full border border-white/15 bg-night/60 px-3 text-xs font-bold text-ink/85 backdrop-blur-md">
+                          <LikeIcon size={14} className="text-rose" />
+                          You liked them
+                        </span>
                       ) : null}
                     </>
                   }
@@ -264,7 +275,7 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
             <div className="flex h-full items-center justify-center">
               <EmptyState
                 title="You’ve caught up."
-                body="More people are joining the dance floor. Tap below to see the people you passed again."
+                body="You’ve seen everyone for now. Tap below to go through everyone again."
                 action={
                   <Button variant="secondary" size="md" onClick={retry}>
                     Check again

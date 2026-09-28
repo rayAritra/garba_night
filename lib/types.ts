@@ -8,6 +8,8 @@ export type DiscoverProfile = {
   bio: string;
   photos: string[];
   interests: string[];
+  /** You already liked them (still waiting on them). Only set by Discover (migration 0008). */
+  liked_by_me?: boolean;
 };
 
 export type MatchSummary = {
