@@ -17,15 +17,17 @@ import { MatchModal } from "@/components/discover/match-modal";
  * "Likes you": one-way likes waiting for an answer. Liking back goes through the same `submit_swipe`
  * as Discover, so the backend still decides the match; passing simply removes them from the row.
  */
-export function LikesYou({ likes, onAnswered }: { likes: LikeReceived[]; onAnswered: (id: string) => void }) {
-  const { viewer, markCelebrated, refresh } = useInbox();
+export function LikesYou() {
+  const { viewer, markCelebrated, refresh, likes: likesOrNull, removeLike } = useInbox();
+  const likes = likesOrNull ?? [];
   const toast = useToast();
   const [open, setOpen] = useState<LikeReceived | null>(null);
   const [photo, setPhoto] = useState(0);
   const [match, setMatch] = useState<{ matchId: string; profile: LikeReceived } | null>(null);
   const [pending, startTransition] = useTransition();
 
-  if (!likes.length && !match) return null;
+  // Backend function not installed yet: hide the row entirely rather than show a misleading "no likes".
+  if (likesOrNull === null) return null;
 
   const answer = (person: LikeReceived, direction: "LIKE" | "PASS") =>
     startTransition(async () => {
@@ -36,7 +38,7 @@ export function LikesYou({ likes, onAnswered }: { likes: LikeReceived[]; onAnswe
         return;
       }
       setOpen(null);
-      onAnswered(person.id);
+      removeLike(person.id);
       if (typeof data === "string" && data) {
         markCelebrated(data);
         setMatch({ matchId: data, profile: person });
@@ -46,11 +48,11 @@ export function LikesYou({ likes, onAnswered }: { likes: LikeReceived[]; onAnswe
 
   return (
     <>
-      {likes.length ? (
-        <section aria-labelledby="likes-h" className="mt-6">
-          <SectionLabel id="likes-h" className="mx-5 mb-3.5 text-[13px] text-saffron/80 lg:mx-4">
-            Likes you · {likes.length}
-          </SectionLabel>
+      <section aria-labelledby="likes-h" className="mt-6">
+        <SectionLabel id="likes-h" className="mx-5 mb-3.5 text-[13px] text-saffron/80 lg:mx-4">
+          Likes you{likes.length ? ` · ${likes.length}` : ""}
+        </SectionLabel>
+        {likes.length ? (
           <ul className="no-scrollbar m-0 flex list-none gap-4 overflow-x-auto px-5 pb-1 lg:px-4">
             {likes.map((person) => (
               <li key={person.id} className="w-[72px] shrink-0">
@@ -69,8 +71,13 @@ export function LikesYou({ likes, onAnswered }: { likes: LikeReceived[]; onAnswe
               </li>
             ))}
           </ul>
-        </section>
-      ) : null}
+        ) : (
+          <p className="mx-5 my-0 flex items-center gap-3 rounded-[18px] border border-dashed border-white/10 px-4 py-3.5 text-sm text-ink/50 lg:mx-4">
+            <LikeIcon size={18} className="shrink-0 text-saffron/60" />
+            No likes yet. When someone likes you, they’ll show up here right away.
+          </p>
+        )}
+      </section>
 
       <BottomSheet open={Boolean(open)} onClose={() => setOpen(null)} title={open ? `${open.name} likes you` : ""}>
         {open ? (

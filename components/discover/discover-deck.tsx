@@ -23,7 +23,8 @@ const actionClass =
 
 export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] | null; paused: boolean }) {
   const supabase = useMemo(() => createClient(), []);
-  const { viewer, markCelebrated } = useInbox();
+  const { viewer, markCelebrated, likes, removeLike } = useInbox();
+  const likedMe = useMemo(() => new Set((likes ?? []).map((l) => l.id)), [likes]);
   const toast = useToast();
   const reduceMotion = useReducedMotion();
 
@@ -90,6 +91,7 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
   const commit = useCallback(
     (decision: SwipeDecision, card: DiscoverProfile) => {
       seen.current.add(card.id);
+      removeLike(card.id);
       setQueue((current) => current.filter((p) => p.id !== card.id));
       setPhoto(0);
       // Refill while a few cards remain so the deck never visibly runs dry mid-swipe.
@@ -114,7 +116,7 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
       pending.current.add(request);
       void request.finally(() => pending.current.delete(request));
     },
-    [fetchMore, markCelebrated, supabase, toast],
+    [fetchMore, markCelebrated, removeLike, supabase, toast],
   );
 
   const swipe = useCallback(
@@ -240,6 +242,12 @@ export function DiscoverDeck({ initial, paused }: { initial: DiscoverProfile[] |
                       <motion.div aria-hidden="true" style={{ opacity: passOpacity }} className="absolute top-11 right-[22px] z-10 rotate-10 rounded-sm border-2 border-ink/80 px-3.5 py-1.5 text-[22px] font-extrabold tracking-[0.06em] text-ink/90">
                         PASS
                       </motion.div>
+                      {likedMe.has(top.id) ? (
+                        <span className="absolute top-7 right-3.5 z-10 inline-flex h-8 items-center gap-1.5 rounded-full border border-saffron/40 bg-night/60 px-3 text-xs font-bold text-saffron shadow-[0_0_24px_rgba(255,160,60,.35)] backdrop-blur-md">
+                          <LikeIcon size={14} />
+                          Likes you
+                        </span>
+                      ) : null}
                     </>
                   }
                 />

@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import type { LikeReceived, MatchSummary } from "@/lib/types";
+import type { MatchSummary } from "@/lib/types";
 import { LikesYou } from "@/components/matches/likes-you";
 import { cn, shortStamp } from "@/lib/utils";
 import { useInbox } from "@/components/layout/inbox-provider";
@@ -72,27 +70,10 @@ function useInboxState() {
 }
 
 /** Matches.html: fresh matches as rings, then conversations. */
-export function MatchesView({ initialLikes }: { initialLikes: LikeReceived[] | null }) {
-  const { matches, error, retry } = useInboxState();
-  const [likes, setLikes] = useState<LikeReceived[]>(initialLikes ?? []);
-  const likesAvailable = initialLikes !== null;
-
-  // Swipes aren't broadcast to their target, so re-check "Likes you" whenever the tab comes back.
-  useEffect(() => {
-    if (!likesAvailable) return;
-    const onVisible = () => {
-      if (document.visibilityState !== "visible") return;
-      void createClient()
-        .rpc("get_likes_received")
-        .then(({ data, error: rpcError }) => {
-          if (!rpcError) setLikes((data ?? []) as LikeReceived[]);
-        });
-    };
-    document.addEventListener("visibilitychange", onVisible);
-    return () => document.removeEventListener("visibilitychange", onVisible);
-  }, [likesAvailable]);
-
-  const likesRow = <LikesYou likes={likes} onAnswered={(id) => setLikes((list) => list.filter((p) => p.id !== id))} />;
+export function MatchesView() {
+  const { matches, error, retry, likes: likesOrNull } = useInboxState();
+  const likes = likesOrNull ?? [];
+  const likesRow = <LikesYou />;
 
   if (!matches) return error ? <ErrorState className="mt-24" action={retry} /> : <ListSkeleton />;
   if (!matches.length) {

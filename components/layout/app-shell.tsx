@@ -31,26 +31,38 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+/** Unread chats on Chats, pending likes on Matches. */
+function useBadges() {
+  const { unreadTotal, likes } = useInbox();
+  const likeCount = likes?.length ?? 0;
+  return (href: string) =>
+    href === "/messages" && unreadTotal > 0
+      ? { count: unreadTotal, text: "unread" }
+      : href === "/matches" && likeCount > 0
+        ? { count: likeCount, text: likeCount === 1 ? "person likes you" : "people like you" }
+        : null;
+}
+
 /** Floating glass tab bar (mobile/tablet). Content reserves space for it via the `pb-nav` utility. */
 export function BottomNav() {
   const pathname = usePathname();
-  const { unreadTotal } = useInbox();
+  const badgeFor = useBadges();
   return (
     <nav aria-label="Primary" className="glass bottom-safe fixed inset-x-4 z-40 mx-auto grid h-[68px] max-w-[448px] grid-cols-4 rounded-[24px] shadow-[0_20px_60px_rgba(0,0,0,.5)] lg:hidden">
       {NAV.map(({ href, label, Icon, ActiveIcon }) => {
         const active = isActive(pathname, href);
-        const unread = href === "/messages" && unreadTotal > 0;
+        const badge = badgeFor(href);
         return (
           <Link
             key={href}
             href={href}
             aria-current={active ? "page" : undefined}
-            aria-label={unread ? `${label}, ${unreadTotal} unread` : undefined}
+            aria-label={badge ? `${label}, ${badge.count} ${badge.text}` : undefined}
             className={cn("relative flex flex-col items-center justify-center gap-1 rounded-[20px] text-[11px] font-semibold no-underline transition-colors focus-visible:outline-offset-[-4px]", active ? "text-ink" : "text-ink/50 hover:text-ink/80")}
           >
             <span className="relative">
               {active ? <ActiveIcon className="text-saffron" /> : <Icon />}
-              {unread ? <span aria-hidden="true" className="absolute -top-0.5 -right-1 size-2 rounded-full bg-rose shadow-[0_0_0_2px_#0F0F12]" /> : null}
+              {badge ? <span aria-hidden="true" className={cn("absolute -top-0.5 -right-1 size-2 rounded-full shadow-[0_0_0_2px_#0F0F12]", href === "/matches" ? "bg-saffron" : "bg-rose")} /> : null}
             </span>
             {label}
             {active ? <span aria-hidden="true" className="absolute bottom-1.5 h-[3px] w-4 rounded-sm bg-saffron shadow-[0_0_10px_rgba(255,181,71,.8)]" /> : null}
@@ -64,7 +76,8 @@ export function BottomNav() {
 /** Desktop sidebar from DiscoverDesktop.html. */
 function Sidebar() {
   const pathname = usePathname();
-  const { unreadTotal, viewer } = useInbox();
+  const { viewer } = useInbox();
+  const badgeFor = useBadges();
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-[260px] flex-col gap-9 border-r border-white/5 px-5 py-7 lg:flex">
       <Link href="/discover" className="pl-3.5 no-underline">
@@ -82,10 +95,10 @@ function Sidebar() {
             >
               {active ? <ActiveIcon size={20} className="text-saffron" /> : <Icon size={20} />}
               {label}
-              {href === "/messages" && unreadTotal > 0 ? (
+              {badgeFor(href) ? (
                 <span className="ml-auto inline-flex h-[22px] min-w-[22px] items-center justify-center rounded-full bg-saffron px-1.5 text-xs font-bold text-on-accent">
-                  {unreadTotal}
-                  <span className="sr-only"> unread</span>
+                  {badgeFor(href)?.count}
+                  <span className="sr-only"> {badgeFor(href)?.text}</span>
                 </span>
               ) : null}
             </Link>
