@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { EVENT } from "@/lib/constants";
-import { eventDate, eventKicker, eventPlace, eventTime } from "@/lib/event";
+import { CREATOR, EVENT } from "@/lib/constants";
+import { eventDate, eventKicker, eventPlace, eventTime, eventTitle } from "@/lib/event";
 import { createClient } from "@/lib/supabase/server";
 import { ButtonLink } from "@/components/ui/button";
 import { GlowOrb, Wordmark } from "@/components/ui/glass-panel";
@@ -148,6 +148,18 @@ export default async function LandingPage() {
           {primary.label}
         </ButtonLink>
       </section>
+
+      <footer className="pb-safe relative mx-auto flex max-w-[480px] flex-col gap-2 border-t border-white/6 px-6 pt-6 pb-8 text-[13px] text-ink/46 sm:flex-row sm:items-center sm:justify-between lg:max-w-[1120px] lg:px-0">
+        <span>
+          {eventTitle} · {eventPlace}
+        </span>
+        <span>
+          Made by{" "}
+          <a href={CREATOR.github} target="_blank" rel="noopener noreferrer" className="font-semibold text-saffron no-underline hover:text-saffron-soft">
+            {CREATOR.name}
+          </a>
+        </span>
+      </footer>
 
       <Grain id="grain" />
     </div>

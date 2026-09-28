@@ -13,18 +13,16 @@ export const ICEBREAKERS = ["Garba skills from 1–10?", "What’s your go-to Ga
 
 export const REPORT_REASONS = ["Fake profile", "Inappropriate content", "Harassment", "Spam", "Other"] as const;
 
-const env = (value: string | undefined) => value?.trim() || undefined;
-
-/**
- * The event every screen points at. Set these per deployment; unset optional fields are hidden
- * rather than shown as placeholders.
- */
+/** The event every screen points at. Edit here to change what the app shows. */
 export const EVENT = {
-  name: env(process.env.NEXT_PUBLIC_EVENT_NAME) ?? "Garba Night",
-  college: env(process.env.NEXT_PUBLIC_EVENT_COLLEGE),
-  venue: env(process.env.NEXT_PUBLIC_EVENT_VENUE),
-  campus: env(process.env.NEXT_PUBLIC_EVENT_CAMPUS),
-  startsAt: env(process.env.NEXT_PUBLIC_EVENT_STARTS_AT) ?? "2026-10-12T19:00:00+05:30",
-  timeZone: env(process.env.NEXT_PUBLIC_EVENT_TIMEZONE) ?? "Asia/Kolkata",
-  dressCode: env(process.env.NEXT_PUBLIC_EVENT_DRESS_CODE) ?? "Traditional",
+  name: "Garba Night",
+  college: "MAKAUT",
+  venue: "Maulana Abul Kalam Azad University of Technology",
+  campus: "West Bengal",
+  startsAt: "2026-10-30T19:00:00+05:30",
+  timeZone: "Asia/Kolkata",
+  dressCode: "Traditional",
 };
+
+/** Credit shown in the landing page footer. */
+export const CREATOR = { name: "Aritra Ray", github: "https://github.com/rayAritra" };
