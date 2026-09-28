@@ -4,7 +4,7 @@ import { Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, use
 import { PAGE_SIZE, confirmSend, fromRows, isNearBottom, optimistic, prependOlder, sendErrorMessage, setStatus, upsertMessage, type ThreadMessage } from "@/lib/chat";
 import { ICEBREAKERS } from "@/lib/constants";
 import { createClient, createRealtimeClient } from "@/lib/supabase/client";
-import type { ChatMessage, MatchContact } from "@/lib/types";
+import type { ChatMessage, MatchContact, MatchDetails } from "@/lib/types";
 import { dayLabel, matchedLabel } from "@/lib/utils";
 import { useVisualViewport } from "@/hooks/use-visual-viewport";
 import { useInbox } from "@/components/layout/inbox-provider";
@@ -17,6 +17,7 @@ import { ChatBubble, DaySeparator } from "@/components/chat/chat-bubble";
 import { ChatComposer } from "@/components/chat/chat-composer";
 import { ConnectCard } from "@/components/chat/connect-card";
 import { SafetySheet } from "@/components/chat/safety-sheet";
+import { MatchProfileSheet } from "@/components/chat/match-profile-sheet";
 
 type Props = {
   matchId: string;
@@ -24,9 +25,11 @@ type Props = {
   matchedAt: string | null;
   initialMessages: ChatMessage[];
   initialHasMore: boolean;
+  /** Full profile for "View profile"; null when unavailable. */
+  details: MatchDetails | null;
 };
 
-export function ChatView({ matchId, other, matchedAt, initialMessages, initialHasMore }: Props) {
+export function ChatView({ matchId, other, details, matchedAt, initialMessages, initialHasMore }: Props) {
   const supabase = useMemo(() => createClient(), []);
   const { viewer, refresh } = useInbox();
   const toast = useToast();
@@ -37,6 +40,7 @@ export function ChatView({ matchId, other, matchedAt, initialMessages, initialHa
   const [loadingOlder, setLoadingOlder] = useState(false);
   const [ended, setEnded] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const [atBottom, setAtBottom] = useState(true);
   const [readUpTo, setReadUpTo] = useState(initialMessages.length);
 
@@ -217,6 +221,11 @@ export function ChatView({ matchId, other, matchedAt, initialMessages, initialHa
               You matched with {other.name}
               {when ? ` ${when}` : ""}
             </p>
+            {details && !ended ? (
+              <button type="button" onClick={() => setProfileOpen(true)} className="h-11 rounded-full border border-saffron/35 bg-saffron/8 px-5 text-sm font-bold text-saffron transition-colors hover:bg-saffron/14">
+                View {other.name}&apos;s full profile
+              </button>
+            ) : null}
             {messages.length === 0 && !ended ? (
               <div className="mt-[18px] flex flex-col items-center gap-2.5">
                 <h2 className="m-0 mb-1 text-[22px] font-extrabold tracking-[-0.02em]">
@@ -268,11 +277,20 @@ export function ChatView({ matchId, other, matchedAt, initialMessages, initialHa
           <IconLink href="/messages" label="Back to chats" className="lg:hidden">
             <BackIcon />
           </IconLink>
-          <Avatar path={other.photo} name={other.name} seed={other.profile_id} size={40} className="lg:ml-2" />
-          <span className="ml-1.5 flex min-w-0 flex-1 flex-col">
-            <h1 className="m-0 truncate text-base font-bold">{other.name}</h1>
-            <span className="text-xs text-ink/50">{ended ? "Conversation ended" : matchedLabel(matchedAt)}</span>
-          </span>
+          <h1 className="sr-only">Chat with {other.name}</h1>
+          <button
+            type="button"
+            onClick={() => setProfileOpen(true)}
+            disabled={!details || ended}
+            aria-label={details && !ended ? `View ${other.name}'s profile` : undefined}
+            className="flex min-h-11 min-w-0 flex-1 items-center gap-1.5 rounded-full pr-2 text-left enabled:hover:bg-white/4 disabled:cursor-default lg:ml-2"
+          >
+            <Avatar path={other.photo} name={other.name} seed={other.profile_id} size={40} />
+            <span className="ml-1.5 flex min-w-0 flex-1 flex-col">
+              <span aria-hidden="true" className="truncate text-base font-bold">{other.name}</span>
+              <span className="text-xs text-ink/50">{ended ? "Conversation ended" : details ? `${matchedLabel(matchedAt)} · View profile` : matchedLabel(matchedAt)}</span>
+            </span>
+          </button>
           <IconButton label={`More options for ${other.name}`} tone="plain" className="text-ink/80" onClick={() => setSheetOpen(true)}>
             <DotsIcon size={20} />
           </IconButton>
@@ -293,6 +311,7 @@ export function ChatView({ matchId, other, matchedAt, initialMessages, initialHa
         <ChatComposer onSend={send} disabled={ended} onFocus={() => nearBottom.current && window.setTimeout(() => scrollToBottom(), 250)} />
       </div>
 
+      {details ? <MatchProfileSheet open={profileOpen && !ended} onClose={() => setProfileOpen(false)} details={details} /> : null}
       <SafetySheet open={sheetOpen} onClose={() => setSheetOpen(false)} matchId={matchId} profileId={other.profile_id} name={other.name} />
     </div>
   );

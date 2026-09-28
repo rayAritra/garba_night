@@ -61,3 +61,6 @@ export type ChatMessage = {
 
 /** Someone who liked the viewer and is still waiting for an answer (`get_likes_received`). */
 export type LikeReceived = DiscoverProfile & { liked_at: string };
+
+/** The other person's full profile in an active match (`get_match_details`); socials only if shared. */
+export type MatchDetails = Omit<DiscoverProfile, "id"> & { profile_id: string; instagram_username: string | null; whatsapp_number: string | null };

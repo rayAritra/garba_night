@@ -22,6 +22,6 @@ export function Wordmark({ className, large }: { className?: string; large?: boo
 }
 
 /** Uppercase section label from the type scale (12 · 600 · +8–10% caps). */
-export function SectionLabel({ className, as: Tag = "h2", ...props }: ComponentProps<"h2"> & { as?: "h2" | "h3" | "p" | "span" }) {
+export function SectionLabel({ className, as: Tag = "h2", ...props }: ComponentProps<"h2"> & { as?: "h2" | "h3" | "h4" | "p" | "span" }) {
   return <Tag className={cn("m-0 text-xs font-semibold tracking-[0.08em] text-ink/50 uppercase", className)} {...props} />;
 }
