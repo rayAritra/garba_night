@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Discover</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@1&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#050505;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#F4F1EC;-webkit-font-smoothing:antialiased}
+a{color:#FFB547}a:hover{color:#FFD08A}
+.serif{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400}
+.ph{position:absolute;inset:0;overflow:hidden;transition:opacity .25s ease}
+.ph-head{position:absolute;left:50%;top:20%;width:34%;aspect-ratio:1/1.18;transform:translateX(-50%);border-radius:50%;background:#150c0f;box-shadow:inset 10px 8px 22px rgba(255,170,90,.22),-8px -6px 30px rgba(255,160,70,.18)}
+.ph-body{position:absolute;left:50%;top:52%;width:88%;height:70%;transform:translateX(-50%);border-radius:48% 48% 0 0;background:#150c0f;box-shadow:inset 14px 10px 30px rgba(255,150,80,.16)}
+.t1{background:radial-gradient(circle at 18% 16%,rgba(255,181,71,.9) 0,transparent 20%),radial-gradient(circle at 84% 28%,rgba(232,103,42,.7) 0,transparent 16%),radial-gradient(circle at 62% 6%,rgba(255,224,160,.55) 0,transparent 9%),radial-gradient(circle at 8% 52%,rgba(224,64,106,.45) 0,transparent 14%),linear-gradient(180deg,#43200f,#1c0e0c 58%,#0b0808)}
+.t2{background:radial-gradient(circle at 78% 14%,rgba(224,64,106,.85) 0,transparent 20%),radial-gradient(circle at 16% 30%,rgba(184,50,122,.7) 0,transparent 17%),radial-gradient(circle at 40% 8%,rgba(255,181,71,.5) 0,transparent 9%),linear-gradient(180deg,#3a1022,#1a0b14 58%,#0a0709)}
+.t3{background:radial-gradient(circle at 70% 20%,rgba(140,90,220,.6) 0,transparent 18%),radial-gradient(circle at 20% 12%,rgba(255,181,71,.7) 0,transparent 16%),linear-gradient(180deg,#24163a,#120c18 58%,#09070b)}
+.t4{background:radial-gradient(circle at 50% 10%,rgba(255,200,110,.8) 0,transparent 16%),radial-gradient(circle at 12% 22%,rgba(232,103,42,.6) 0,transparent 14%),radial-gradient(circle at 88% 40%,rgba(224,64,106,.5) 0,transparent 14%),linear-gradient(180deg,#3d2410,#1b110a 58%,#0a0807)}
+.act{border:1px solid rgba(255,255,255,.09);background:rgba(15,15,18,.6);backdrop-filter:blur(20px) saturate(140%);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s ease,box-shadow .2s ease}
+.act:hover{transform:translateY(-2px)}
+.act:active{transform:scale(.92)}
+.act:focus-visible{outline:2px solid #FFB547;outline-offset:3px}
+.seg{flex-grow:1;height:3px;border-radius:2px;border:0;padding:0;cursor:pointer}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<main style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #050505;">
+  <div aria-hidden="true" style="position: absolute; left: 50%; top: 220px; width: 520px; height: 520px; margin-left: -260px; border-radius: 50%; background: radial-gradient(circle, rgba(184,50,122,.16), transparent 62%); filter: blur(30px);"></div>
+
+  <header style="position: absolute; top: 0; left: 0; right: 0; height: 60px; padding: 0 16px 0 20px; display: flex; align-items: center; justify-content: space-between;">
+    <span style="font-size: 16px; font-weight: 700; letter-spacing: -0.02em;">garba<span class="serif" style="color: #FFB547; font-size: 19px; margin-left: 3px;">after dark</span></span>
+    <button class="act" aria-label="Discovery preferences" style="width: 44px; height: 44px; border-radius: 50%; color: #F4F1EC;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg></button>
+  </header>
+
+  <sc-if value="{{hasCard}}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{hasNext}}" hint-placeholder-val="{{ true }}">
+      <div aria-hidden="true" style="position: absolute; left: 16px; top: 64px; width: 358px; height: 590px; border-radius: 30px; overflow: hidden; transform: translateY({{nextY}}px) scale({{nextScale}}); transform-origin: 50% 100%; opacity: {{nextOp}}; border: 1px solid rgba(255,255,255,.06);">
+        <div class="ph {{nextTone}}"><div class="ph-head"></div><div class="ph-body"></div></div>
+        <div style="position: absolute; inset: 0; background: rgba(5,5,5,.35);"></div>
+      </div>
+    </sc-if>
+
+    <article aria-label="{{card.name}}, {{card.age}}" onPointerDown="{{down}}" onPointerMove="{{move}}" onPointerUp="{{up}}" onPointerCancel="{{up}}" style="position: absolute; left: 16px; top: 64px; width: 358px; height: 590px; border-radius: 30px; overflow: hidden; touch-action: none; user-select: none; cursor: grab; transform: translateX({{dx}}px) rotate({{rot}}deg); transition: {{trans}}; box-shadow: 0 30px 70px rgba(0,0,0,.6); animation: rise .35s ease both;">
+      <div class="ph {{tone}}"><div class="ph-head"></div><div class="ph-body"></div></div>
+      <div style="position: absolute; inset: 0; border-radius: 30px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); pointer-events: none;"></div>
+      <div style="position: absolute; inset: 0 0 auto 0; height: 90px; background: linear-gradient(180deg, rgba(5,5,5,.45), transparent); pointer-events: none;"></div>
+      <div style="position: absolute; inset: auto 0 0 0; height: 300px; background: linear-gradient(0deg, rgba(5,5,5,.96) 18%, rgba(5,5,5,.6) 52%, transparent); pointer-events: none;"></div>
+
+      <div style="position: absolute; left: 14px; right: 14px; top: 12px; display: flex; gap: 5px;">
+        <sc-for list="{{segs}}" as="s" hint-placeholder-count="3">
+          <button class="seg" aria-label="Photo {{s.n}}" onClick="{{s.go}}" style="background: {{s.bg}};"></button>
+        </sc-for>
+      </div>
+
+      <div aria-hidden="true" style="position: absolute; left: 22px; top: 44px; padding: 6px 14px; border-radius: 12px; border: 2px solid #FFB547; color: #FFB547; font-size: 22px; font-weight: 800; letter-spacing: 0.06em; transform: rotate(-10deg); opacity: {{likeOp}};">VIBE</div>
+      <div aria-hidden="true" style="position: absolute; right: 22px; top: 44px; padding: 6px 14px; border-radius: 12px; border: 2px solid rgba(244,241,236,.8); color: rgba(244,241,236,.9); font-size: 22px; font-weight: 800; letter-spacing: 0.06em; transform: rotate(10deg); opacity: {{passOp}};">PASS</div>
+
+      <div style="position: absolute; left: 22px; right: 22px; bottom: 22px; display: flex; flex-direction: column; gap: 10px; pointer-events: none;">
+        <div style="display: flex; align-items: baseline; gap: 10px;">
+          <h2 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.03em;">{{card.name}}</h2>
+          <span style="font-size: 26px; font-weight: 400; color: rgba(244,241,236,.8);">{{card.age}}</span>
+        </div>
+        <p style="margin: -4px 0 0; font-size: 14px; font-weight: 500; color: rgba(244,241,236,.66);">{{card.meta}}</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;">
+          <sc-for list="{{card.tags}}" as="t" hint-placeholder-count="3">
+            <span style="height: 28px; padding: 0 12px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; color: #F4F1EC; background: rgba(255,255,255,.1); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.1);">{{t}}</span>
+          </sc-for>
+        </div>
+        <p style="margin: 2px 0 0; font-size: 15px; line-height: 1.45; color: rgba(244,241,236,.84);">{{card.bio}}</p>
+      </div>
+    </article>
+
+    <div style="position: absolute; left: 0; right: 0; top: 666px; display: flex; justify-content: center; align-items: center; gap: 22px;">
+      <button class="act" aria-label="Pass" onClick="{{pass}}" style="width: 60px; height: 60px; border-radius: 50%; color: rgba(244,241,236,.85);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+      <button class="act" aria-label="Like" onClick="{{like}}" style="width: 72px; height: 72px; border-radius: 50%; border-color: rgba(255,181,71,.35); box-shadow: 0 0 40px rgba(245,140,40,.28), inset 0 0 20px rgba(255,181,71,.12);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#FFB547"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 2.9 5 6.4 5c2 0 3.6 1.1 4.4 2.6h2.4C14 6.1 15.6 5 17.6 5 21.1 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z"></path></svg></button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+    <section style="position: absolute; left: 32px; right: 32px; top: 250px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; animation: rise .4s ease both;">
+      <div aria-hidden="true" style="width: 88px; height: 88px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(255,181,71,.18), transparent 70%);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFB547" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"></path></svg></div>
+      <h2 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.03em;">You've caught up.</h2>
+      <p style="margin: 0; font-size: 15px; line-height: 1.5; color: rgba(244,241,236,.62);">More people are joining the dance floor. Check back soon.</p>
+      <button onClick="{{reset}}" style="margin-top: 8px; height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(15,15,18,.6); color: #F4F1EC; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Start over</button>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{matched}}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-label="New match" style="position: absolute; left: 16px; right: 16px; top: 540px; padding: 16px; border-radius: 24px; display: flex; align-items: center; gap: 12px; background: rgba(20,12,16,.72); backdrop-filter: blur(24px) saturate(140%); border: 1px solid rgba(224,64,106,.35); box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 60px rgba(224,64,106,.25); animation: rise .3s ease both;">
+      <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-size: 16px; font-weight: 700;">It's mutual.</span>
+        <span style="font-size: 13px; color: rgba(244,241,236,.64);">Ishaan liked you back.</span>
+      </div>
+      <a href="Match.dc.html" style="height: 44px; padding: 0 18px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 14px; font-weight: 700; color: #1A0E05; text-decoration: none; background: linear-gradient(135deg, #FFC15E, #F08A2C);">See match</a>
+    </div>
+  </sc-if>
+
+  <nav aria-label="Primary" style="position: absolute; left: 16px; right: 16px; bottom: 22px; height: 68px; border-radius: 24px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: rgba(15,15,18,.62); backdrop-filter: blur(24px) saturate(140%); border: 1px solid rgba(255,255,255,.07); box-shadow: 0 20px 60px rgba(0,0,0,.5);">
+    <a href="Discover.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #F4F1EC; text-decoration: none; font-size: 11px; font-weight: 600; position: relative;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFB547" stroke="none"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"></path></svg>Discover
+      <span style="position: absolute; bottom: 6px; width: 16px; height: 3px; border-radius: 2px; background: #FFB547; box-shadow: 0 0 10px rgba(255,181,71,.8);"></span></a>
+    <a href="Matches.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: rgba(244,241,236,.5); text-decoration: none; font-size: 11px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7-4.3-9-8.6C1.7 8.4 3.5 5 6.8 5c1.9 0 3.4 1 4.2 2.5h2C13.8 6 15.3 5 17.2 5c3.3 0 5.1 3.4 3.8 6.4-2 4.3-9 8.6-9 8.6z"></path></svg>Matches</a>
+    <a href="Chat.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: rgba(244,241,236,.5); text-decoration: none; font-size: 11px; font-weight: 600; position: relative;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg>Chats
+      <span aria-label="Unread messages" style="position: absolute; top: 14px; right: 26px; width: 8px; height: 8px; border-radius: 50%; background: #E0406A; box-shadow: 0 0 0 2px #0F0F12;"></span></a>
+    <a href="Profile.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: rgba(244,241,236,.5); text-decoration: none; font-size: 11px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg>Profile</a>
+  </nav>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.profiles = [
+      { name: 'Ananya', age: 20, meta: 'CSE · 3rd year', tags: ['Garba', 'Music', 'Travel'], bio: 'Will out-dance you in the first round. Stays for the dhol.', photos: ['t1', 't2', 't4'] },
+      { name: 'Ishaan', age: 21, meta: 'Mechanical · 4th year', tags: ['Cricket', 'Food', 'Garba'], bio: 'Here for the food stalls. Staying for the circle.', photos: ['t3', 't1'] },
+      { name: 'Meera', age: 19, meta: 'Design · 2nd year', tags: ['Art', 'Fashion', 'Dance'], bio: 'Chaniya choli ready since August.', photos: ['t2', 't4', 't3'] }
+    ];
+    this.state = { i: 0, photo: 0, dx: 0, anim: false, matched: false };
+    this.start = null;
+  }
+  fling(dir) {
+    const liked = dir > 0;
+    const idx = this.state.i;
+    this.setState({ dx: dir * 520, anim: true });
+    setTimeout(() => {
+      this.setState({ i: idx + 1, photo: 0, dx: 0, anim: false, matched: liked && idx === 1 });
+    }, 260);
+  }
+  renderVals() {
+    const s = this.state;
+    const card = this.profiles[s.i];
+    const next = this.profiles[s.i + 1];
+    const has = !!card;
+    const prog = Math.min(Math.abs(s.dx) / 120, 1);
+    const photos = has ? card.photos : [];
+    return {
+      hasCard: has,
+      empty: !has,
+      hasNext: !!next,
+      matched: s.matched,
+      card: card || { name: '', age: '', meta: '', tags: [], bio: '' },
+      tone: has ? photos[s.photo] : 't1',
+      nextTone: next ? next.photos[0] : 't1',
+      nextScale: (0.94 + prog * 0.06).toFixed(3),
+      nextY: Math.round(14 - prog * 14),
+      nextOp: (0.55 + prog * 0.45).toFixed(2),
+      dx: Math.round(s.dx),
+      rot: (Math.max(-8, Math.min(8, s.dx / 22))).toFixed(2),
+      trans: s.anim ? 'transform .28s cubic-bezier(.2,.8,.2,1)' : 'none',
+      likeOp: s.dx > 0 ? prog.toFixed(2) : 0,
+      passOp: s.dx < 0 ? prog.toFixed(2) : 0,
+      segs: photos.map((t, n) => ({ n: n + 1, bg: n === s.photo ? '#F4F1EC' : 'rgba(244,241,236,.3)', go: (e) => { e.stopPropagation(); this.setState({ photo: n }); } })),
+      down: (e) => { if (e.target.tagName === 'BUTTON') return; this.start = { x: e.clientX, y: e.clientY, w: e.currentTarget.getBoundingClientRect() }; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {} this.setState({ anim: false }); },
+      move: (e) => { if (!this.start) return; this.setState({ dx: e.clientX - this.start.x }); },
+      up: (e) => {
+        if (!this.start) return;
+        const st = this.start; this.start = null;
+        const d = e.clientX - st.x;
+        if (Math.abs(d) < 6 && Math.abs(e.clientY - st.y) < 6) {
+          const leftHalf = e.clientX - st.w.left < st.w.width / 2;
+          const p = s.photo + (leftHalf ? -1 : 1);
+          this.setState({ photo: Math.max(0, Math.min(photos.length - 1, p)), dx: 0 });
+          return;
+        }
+        if (Math.abs(d) > 110) this.fling(d > 0 ? 1 : -1);
+        else this.setState({ dx: 0, anim: true });
+      },
+      like: () => this.fling(1),
+      pass: () => this.fling(-1),
+      reset: () => this.setState({ i: 0, photo: 0, dx: 0, matched: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

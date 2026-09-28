@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#050505;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#F4F1EC;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.row{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 16px;text-decoration:none;font-size:15px}
+.row + .row{border-top:1px solid rgba(255,255,255,.05)}
+.row:focus-visible{outline:2px solid #FFB547;outline-offset:-2px}
+.lbl{flex-grow:1}
+.val{font-size:14px;color:rgba(244,241,236,.5)}
+.grp{margin:0;padding:0;border-radius:18px;background:#0D0D10;overflow:hidden}
+.gh{margin:0 0 8px 16px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(244,241,236,.46)}
+.sw{width:44px;height:26px;border-radius:999px;border:0;padding:3px;cursor:pointer;display:flex;transition:background .2s ease}
+.sw span{width:20px;height:20px;border-radius:50%;background:#F4F1EC;transition:transform .2s ease;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.sw:focus-visible{outline:2px solid #FFB547;outline-offset:2px}
+</style>
+</helmet>
+<main style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #050505;">
+  <header style="height: 64px; padding: 0 8px; display: flex; align-items: center; gap: 4px;">
+    <a href="Profile.dc.html" aria-label="Back" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <h1 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em;">Settings</h1>
+  </header>
+
+  <div style="padding: 4px 16px 24px; display: flex; flex-direction: column; gap: 22px;">
+    <section>
+      <h2 class="gh">Account</h2>
+      <div class="grp">
+        <a class="row" href="#"><span class="lbl">Email &amp; password</span><span class="val">aarav@college.edu</span></a>
+      </div>
+    </section>
+    <section>
+      <h2 class="gh">Discovery</h2>
+      <div class="grp">
+        <a class="row" href="#"><span class="lbl">Show me</span><span class="val">Everyone</span></a>
+        <a class="row" href="#"><span class="lbl">Age range</span><span class="val">18–24</span></a>
+        <div class="row"><span class="lbl" id="pause">Pause discovery</span>
+          <button class="sw" role="switch" aria-checked="false" aria-labelledby="pause" style="background: rgba(255,255,255,.14); justify-content: flex-start;"><span></span></button></div>
+      </div>
+    </section>
+    <section>
+      <h2 class="gh">Socials</h2>
+      <div class="grp">
+        <a class="row" href="#"><span class="lbl">Instagram</span><span class="val">@aarav.frames</span></a>
+        <a class="row" href="#"><span class="lbl">WhatsApp</span><span class="val">Added</span></a>
+        <div class="row"><span class="lbl" id="share" style="display: flex; flex-direction: column; gap: 2px; padding: 8px 0;">Share with matches<span style="font-size: 12px; color: rgba(244,241,236,.46);">Only people you match with can see these</span></span>
+          <button class="sw" role="switch" aria-checked="true" aria-labelledby="share" style="background: linear-gradient(135deg,#FFC15E,#F08A2C); justify-content: flex-end;"><span></span></button></div>
+      </div>
+    </section>
+    <section>
+      <h2 class="gh">Privacy</h2>
+      <div class="grp">
+        <a class="row" href="#"><span class="lbl">Blocked users</span><span class="val">2</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(244,241,236,.4)" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"></path></svg></a>
+      </div>
+    </section>
+    <section>
+      <div class="grp">
+        <button class="row" style="width: 100%; border: 0; background: transparent; color: #F4F1EC; font-family: inherit; cursor: pointer; text-align: left;">Log out</button>
+        <button class="row" style="width: 100%; border: 0; border-top: 1px solid rgba(255,255,255,.05); background: transparent; color: #FF7A94; font-family: inherit; cursor: pointer; text-align: left;">Delete account</button>
+      </div>
+    </section>
+  </div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

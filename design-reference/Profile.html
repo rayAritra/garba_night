@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Profile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@1&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#050505;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#F4F1EC;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.serif{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400}
+.ph{position:absolute;inset:0;overflow:hidden}
+.ph-head{position:absolute;left:50%;top:20%;width:34%;aspect-ratio:1/1.18;transform:translateX(-50%);border-radius:50%;background:#150c0f;box-shadow:inset 10px 8px 22px rgba(255,170,90,.22),-8px -6px 30px rgba(255,160,70,.18)}
+.ph-body{position:absolute;left:50%;top:52%;width:88%;height:70%;transform:translateX(-50%);border-radius:48% 48% 0 0;background:#150c0f;box-shadow:inset 14px 10px 30px rgba(255,150,80,.16)}
+.t4{background:radial-gradient(circle at 50% 10%,rgba(255,200,110,.8) 0,transparent 16%),radial-gradient(circle at 12% 22%,rgba(232,103,42,.6) 0,transparent 14%),radial-gradient(circle at 88% 40%,rgba(224,64,106,.5) 0,transparent 14%),linear-gradient(180deg,#3d2410,#1b110a 58%,#0a0807)}
+</style>
+</helmet>
+<main style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #050505;">
+  <div aria-hidden="true" style="position: absolute; left: 50%; top: 120px; width: 520px; height: 520px; margin-left: -260px; border-radius: 50%; background: radial-gradient(circle, rgba(245,140,40,.16), transparent 62%); filter: blur(30px);"></div>
+
+  <header style="position: absolute; top: 0; left: 0; right: 0; height: 64px; padding: 0 12px 0 20px; display: flex; align-items: center; justify-content: space-between;">
+    <h1 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.03em;">Profile</h1>
+    <a href="Settings.dc.html" aria-label="Settings" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(244,241,236,.85);">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg></a>
+  </header>
+
+  <p style="position: absolute; left: 20px; top: 66px; margin: 0; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,241,236,.5);">How people see you</p>
+
+  <article aria-label="Your card preview" style="position: absolute; left: 16px; top: 94px; width: 358px; height: 400px; border-radius: 30px; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,.55);">
+    <div class="ph t4"><div class="ph-head"></div><div class="ph-body"></div></div>
+    <div style="position: absolute; inset: 0; border-radius: 30px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);"></div>
+    <div style="position: absolute; left: 14px; right: 14px; top: 12px; display: flex; gap: 5px;">
+      <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: #F4F1EC;"></span>
+      <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: rgba(244,241,236,.3);"></span>
+      <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: rgba(244,241,236,.3);"></span>
+    </div>
+    <div style="position: absolute; inset: auto 0 0 0; height: 180px; background: linear-gradient(0deg, rgba(5,5,5,.94) 20%, transparent);"></div>
+    <div style="position: absolute; left: 22px; bottom: 20px; display: flex; flex-direction: column; gap: 4px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;"><span style="font-size: 30px; font-weight: 800; letter-spacing: -0.03em;">Aarav</span><span style="font-size: 24px; color: rgba(244,241,236,.8);">21</span></div>
+      <span style="font-size: 14px; font-weight: 500; color: rgba(244,241,236,.66);">ECE · 3rd year</span>
+    </div>
+  </article>
+
+  <section style="position: absolute; left: 20px; right: 20px; top: 512px; display: flex; flex-direction: column; gap: 14px;">
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: rgba(244,241,236,.84);">Garba: 8/10 on a good night. Will trade dance lessons for a plate of dabeli.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+      <span style="height: 30px; padding: 0 12px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 13px; font-weight: 600; background: rgba(255,181,71,.12); border: 1px solid rgba(255,181,71,.35); color: #FFD08A;">Garba</span>
+      <span style="height: 30px; padding: 0 12px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 13px; font-weight: 600; background: #0F0F12; border: 1px solid rgba(255,255,255,.08); color: rgba(244,241,236,.8);">Photography</span>
+      <span style="height: 30px; padding: 0 12px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 13px; font-weight: 600; background: #0F0F12; border: 1px solid rgba(255,255,255,.08); color: rgba(244,241,236,.8);">F1</span>
+      <span style="height: 30px; padding: 0 12px; border-radius: 999px; display: inline-flex; align-items: center; font-size: 13px; font-weight: 600; background: #0F0F12; border: 1px solid rgba(255,255,255,.08); color: rgba(244,241,236,.8);">Food</span>
+    </div>
+    <a href="#" style="margin-top: 4px; height: 52px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700; text-decoration: none; background: rgba(15,15,18,.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,.12);">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4z"></path></svg>Edit profile</a>
+  </section>
+
+  <nav aria-label="Primary" style="position: absolute; left: 16px; right: 16px; bottom: 22px; height: 68px; border-radius: 24px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: rgba(15,15,18,.62); backdrop-filter: blur(24px) saturate(140%); border: 1px solid rgba(255,255,255,.07); box-shadow: 0 20px 60px rgba(0,0,0,.5);">
+    <a href="Discover.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: rgba(244,241,236,.5); text-decoration: none; font-size: 11px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"></path></svg>Discover</a>
+    <a href="Matches.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: rgba(244,241,236,.5); text-decoration: none; font-size: 11px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7-4.3-9-8.6C1.7 8.4 3.5 5 6.8 5c1.9 0 3.4 1 4.2 2.5h2C13.8 6 15.3 5 17.2 5c3.3 0 5.1 3.4 3.8 6.4-2 4.3-9 8.6-9 8.6z"></path></svg>Matches</a>
+    <a href="Chat.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: rgba(244,241,236,.5); text-decoration: none; font-size: 11px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg>Chats</a>
+    <a href="Profile.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #F4F1EC; text-decoration: none; font-size: 11px; font-weight: 600; position: relative;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFB547" stroke="#FFB547" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6z"></path></svg>Profile
+      <span style="position: absolute; bottom: 6px; width: 16px; height: 3px; border-radius: 2px; background: #FFB547; box-shadow: 0 0 10px rgba(255,181,71,.8);"></span></a>
+  </nav>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

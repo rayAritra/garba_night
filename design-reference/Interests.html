@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Onboarding · interests</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@1&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#050505;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#F4F1EC;-webkit-font-smoothing:antialiased}
+a{color:#FFB547}a:hover{color:#FFD08A}
+.serif{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400}
+.chip{height:44px;padding:0 18px;border-radius:999px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease}
+.chip:active{transform:scale(.95)}
+.chip:focus-visible{outline:2px solid #FFB547;outline-offset:2px}
+.off{background:#0F0F12;border:1px solid rgba(255,255,255,.08);color:rgba(244,241,236,.78)}
+.off:hover{background:#16161A;border-color:rgba(255,255,255,.14)}
+.on{background:rgba(255,181,71,.14);border:1px solid rgba(255,181,71,.6);color:#FFD08A;box-shadow:0 0 24px rgba(255,160,60,.18)}
+</style>
+</helmet>
+<main style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #050505;">
+  <div aria-hidden="true" style="position: absolute; left: -180px; bottom: -80px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(245,140,40,.22), transparent 65%); filter: blur(24px);"></div>
+
+  <header style="position: absolute; top: 0; left: 0; right: 0; padding: 18px 20px 0; display: flex; flex-direction: column; gap: 18px;">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <a href="Photos.dc.html" aria-label="Back" style="width: 44px; height: 44px; margin-left: -10px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #F4F1EC;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></a>
+      <span style="font-size: 13px; font-weight: 600; color: rgba(244,241,236,.5);">Step 3 of 4</span>
+    </div>
+    <div role="progressbar" aria-valuenow="3" aria-valuemin="1" aria-valuemax="4" aria-label="Setup progress" style="display: flex; gap: 6px;">
+      <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: #FFB547;"></span>
+      <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: #FFB547;"></span>
+      <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: #FFB547; box-shadow: 0 0 12px rgba(255,181,71,.6);"></span>
+      <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: rgba(255,255,255,.1);"></span>
+    </div>
+  </header>
+
+  <section style="position: absolute; left: 24px; right: 24px; top: 128px; display: flex; flex-direction: column; gap: 8px;">
+    <h1 style="margin: 0; font-size: 34px; line-height: 1.05; font-weight: 800; letter-spacing: -0.035em;">What's your <span class="serif" style="font-size: 40px; color: #FFB547;">vibe?</span></h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: rgba(244,241,236,.64);">Pick up to five. We'll show them on your card.</p>
+  </section>
+
+  <div role="group" aria-label="Interests" style="position: absolute; left: 24px; right: 24px; top: 236px; display: flex; flex-wrap: wrap; gap: 10px;">
+    <sc-for list="{{chips}}" as="c" hint-placeholder-count="16">
+      <button class="{{c.cls}}" aria-pressed="{{c.pressed}}" onClick="{{c.toggle}}">{{c.label}}</button>
+    </sc-for>
+  </div>
+
+  <footer style="position: absolute; left: 24px; right: 24px; bottom: 34px; display: flex; flex-direction: column; gap: 14px;">
+    <p style="margin: 0; text-align: center; font-size: 13px; font-weight: 600; color: rgba(244,241,236,.5);">{{count}} of 5 picked</p>
+    <a href="Discover.dc.html" style="height: 56px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #1A0E05; text-decoration: none; background: linear-gradient(135deg, #FFC15E, #F08A2C); box-shadow: 0 12px 40px rgba(240,138,44,.3), inset 0 1px 0 rgba(255,255,255,.4);">Continue</a>
+  </footer>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { picked: ['Garba', 'Music', 'Travel'] }; }
+  renderVals() {
+    const all = ['Garba','Music','Dance','Travel','Movies','Coding','Gaming','Photography','Food','Cricket','Football','F1','Gym','Fashion','Art','Anime'];
+    const picked = this.state.picked;
+    const chips = all.map((label) => {
+      const on = picked.indexOf(label) !== -1;
+      return {
+        label, cls: 'chip ' + (on ? 'on' : 'off'), pressed: on ? 'true' : 'false',
+        toggle: () => {
+          const cur = this.state.picked;
+          if (cur.indexOf(label) !== -1) this.setState({ picked: cur.filter((x) => x !== label) });
+          else if (cur.length < 5) this.setState({ picked: cur.concat([label]) });
+        }
+      };
+    });
+    return { chips, count: picked.length };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chat actions sheet</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#050505;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#F4F1EC;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.opt{width:100%;min-height:56px;display:flex;align-items:center;gap:14px;padding:0 20px;border:0;background:transparent;color:#F4F1EC;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;text-align:left;transition:background .15s ease}
+.opt:hover{background:rgba(255,255,255,.04)}
+.opt:focus-visible{outline:2px solid #FFB547;outline-offset:-2px}
+.ic{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06)}
+@keyframes sheet{from{transform:translateY(100%)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</helmet>
+<main style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #050505;">
+  <div aria-hidden="true" style="position: absolute; inset: 0; padding: 100px 16px 0; display: flex; flex-direction: column; gap: 8px;">
+    <div style="align-self: flex-start; max-width: 70%; padding: 11px 15px; border-radius: 20px 20px 20px 6px; background: #16161A; font-size: 15px;">Solid 7. Watch me in the second round.</div>
+    <div style="align-self: flex-end; max-width: 70%; padding: 11px 15px; border-radius: 20px 20px 6px 20px; background: linear-gradient(135deg,#C2481C,#A62A52); font-size: 15px;">Bold claim. I’ll be watching.</div>
+  </div>
+  <div aria-hidden="true" style="position: absolute; top: 0; left: 0; right: 0; height: 76px; background: rgba(8,8,10,.62); border-bottom: 1px solid rgba(255,255,255,.06);"></div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(4px);"></div>
+
+  <section role="dialog" aria-modal="true" aria-labelledby="sheet-h" style="position: absolute; left: 8px; right: 8px; bottom: 8px; padding: 8px 0 12px; border-radius: 28px; background: rgba(20,20,24,.86); backdrop-filter: blur(30px) saturate(140%); border: 1px solid rgba(255,255,255,.08); box-shadow: 0 -20px 60px rgba(0,0,0,.5); animation: sheet .3s cubic-bezier(.2,.9,.3,1) both;">
+    <div aria-hidden="true" style="width: 36px; height: 4px; margin: 4px auto 14px; border-radius: 2px; background: rgba(255,255,255,.2);"></div>
+    <h2 id="sheet-h" style="margin: 0 20px 10px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,241,236,.5);">Ishaan</h2>
+    <button class="opt"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.3-9-8.6C1.7 8.4 3.5 5 6.8 5c1.9 0 3.4 1 4.2 2.5M13 7.5C13.8 6 15.3 5 17.2 5c3.3 0 5.1 3.4 3.8 6.4"></path><path d="M3 3l18 18"></path></svg></span>
+      <span style="display: flex; flex-direction: column; gap: 2px;">Unmatch<span style="font-size: 13px; font-weight: 400; color: rgba(244,241,236,.5);">Ends the chat for both of you</span></span></button>
+    <button class="opt"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path></svg></span>
+      <span style="display: flex; flex-direction: column; gap: 2px;">Block<span style="font-size: 13px; font-weight: 400; color: rgba(244,241,236,.5);">They won’t see you again</span></span></button>
+    <button class="opt" style="color: #FF7A94;"><span class="ic" style="background: rgba(224,64,106,.14);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4h13l-2 4 2 4H4"></path></svg></span>
+      <span style="display: flex; flex-direction: column; gap: 2px;">Report<span style="font-size: 13px; font-weight: 400; color: rgba(255,160,180,.6);">Tell us what happened. It stays private.</span></span></button>
+    <div style="padding: 10px 12px 0;">
+      <a href="Chat.dc.html" style="height: 52px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; text-decoration: none; background: rgba(255,255,255,.06);">Cancel</a>
+    </div>
+  </section>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

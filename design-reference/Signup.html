@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sign up</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@1&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#050505;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#F4F1EC;-webkit-font-smoothing:antialiased}
+a{color:#FFB547}a:hover{color:#FFD08A}
+.serif{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400}
+input{font-family:inherit}
+input::placeholder{color:rgba(244,241,236,.34)}
+input:focus{outline:none}
+</style>
+</helmet>
+<main style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #050505;">
+  <div aria-hidden="true" style="position: absolute; left: -120px; top: -160px; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(245,140,40,.28), transparent 65%); filter: blur(24px);"></div>
+  <div aria-hidden="true" style="position: absolute; right: -200px; bottom: 80px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(184,50,122,.18), transparent 65%); filter: blur(24px);"></div>
+
+  <header style="position: absolute; top: 0; left: 0; right: 0; height: 64px; padding: 0 12px; display: flex; align-items: center;">
+    <a href="Main.dc.html" aria-label="Back" style="width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #F4F1EC;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></a>
+  </header>
+
+  <section style="position: absolute; left: 24px; right: 24px; top: 96px; display: flex; flex-direction: column; gap: 10px;">
+    <h1 style="margin: 0; font-size: 36px; line-height: 1.05; font-weight: 800; letter-spacing: -0.035em;">Save your spot<br>on the <span class="serif" style="font-size: 42px; color: #FFB547;">floor.</span></h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: rgba(244,241,236,.64);">Takes a minute. The music waits for no one.</p>
+  </section>
+
+  <form style="position: absolute; left: 24px; right: 24px; top: 262px; display: flex; flex-direction: column; gap: 16px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <label for="name" style="font-size: 13px; font-weight: 600; color: rgba(244,241,236,.7);">Name</label>
+      <input id="name" value="Aarav Shah" style="height: 56px; box-sizing: border-box; padding: 0 18px; border-radius: 16px; background: #0F0F12; border: 1px solid rgba(255,255,255,.08); color: #F4F1EC; font-size: 16px;">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <label for="email" style="font-size: 13px; font-weight: 600; color: #FFC97A;">Email</label>
+      <input id="email" type="email" value="aarav@college.edu" style="height: 56px; box-sizing: border-box; padding: 0 18px; border-radius: 16px; background: #131317; border: 1px solid rgba(255,181,71,.55); box-shadow: 0 0 0 4px rgba(255,181,71,.1); color: #F4F1EC; font-size: 16px;">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <label for="pw" style="font-size: 13px; font-weight: 600; color: rgba(244,241,236,.7);">Password</label>
+      <div style="position: relative;">
+        <input id="pw" type="password" value="garbanight24" style="width: 100%; height: 56px; box-sizing: border-box; padding: 0 56px 0 18px; border-radius: 16px; background: #0F0F12; border: 1px solid rgba(255,255,255,.08); color: #F4F1EC; font-size: 16px; letter-spacing: 0.1em;">
+        <button type="button" aria-label="Show password" style="position: absolute; right: 6px; top: 6px; width: 44px; height: 44px; border: 0; border-radius: 12px; background: transparent; color: rgba(244,241,236,.6); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+      </div>
+      <div style="display: flex; gap: 6px; margin-top: 4px;" aria-label="Password strength: good">
+        <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: #FFB547;"></span>
+        <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: #FFB547;"></span>
+        <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: #FFB547;"></span>
+        <span style="flex-grow: 1; height: 3px; border-radius: 2px; background: rgba(255,255,255,.1);"></span>
+      </div>
+    </div>
+  </form>
+
+  <footer style="position: absolute; left: 24px; right: 24px; bottom: 34px; display: flex; flex-direction: column; gap: 16px; align-items: stretch;">
+    <a href="Photos.dc.html" style="height: 56px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #1A0E05; text-decoration: none; background: linear-gradient(135deg, #FFC15E, #F08A2C); box-shadow: 0 12px 40px rgba(240,138,44,.3), inset 0 1px 0 rgba(255,255,255,.4);">Create account</a>
+    <p style="margin: 0; text-align: center; font-size: 14px; color: rgba(244,241,236,.6);">Already in? <a href="Main.dc.html" style="font-weight: 600; text-decoration: none;">Sign in</a></p>
+  </footer>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

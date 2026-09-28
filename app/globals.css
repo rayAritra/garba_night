@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/* Garba After Dark — 85% night, 15% light. Color only where light would fall. */
+@theme {
+  /* Night */
+  --color-night: #050505;
+  --color-night-deep: #040304;
+  --color-elevated: #0a0a0c;
+  --color-surface: #0f0f12;
+  --color-panel: #0d0d10;
+  --color-hover: #16161a;
+  --color-focus-field: #131317;
+
+  /* Light */
+  --color-saffron: #ffb547;
+  --color-saffron-soft: #ffd08a;
+  --color-gold: #ffc15e;
+  --color-ember: #f08a2c;
+  --color-burnt: #c2481c;
+  --color-rose: #e0406a;
+  --color-rose-soft: #ff9fb6;
+  --color-magenta: #b8327a;
+  --color-danger: #ff7a94;
+  --color-mint: #7bd99a;
+
+  /* Text — use ink/68 (secondary) and ink/46 (muted) */
+  --color-ink: #f4f1ec;
+  --color-on-accent: #1a0e05;
+
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-card: 30px;
+
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
+
+  --ease-spring: cubic-bezier(0.2, 0.9, 0.25, 1.1);
+  --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --animate-rise: rise 0.35s ease both;
+  --animate-msg: msg 0.22s ease both;
+  --animate-fade: fade 0.2s ease both;
+  --animate-drift: drift 14s ease-in-out infinite;
+}
+
+/* Keyframes live outside @theme so inline `animation:` styles can use them too. */
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes msg { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes drift { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(18px, -12px); } }
+
+@layer base {
+  html { background: var(--color-night); color-scheme: dark; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-night);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection { background: rgb(255 181 71 / 0.35); }
+  :focus-visible { outline: 2px solid var(--color-saffron); outline-offset: 2px; }
+  input::placeholder, textarea::placeholder { color: rgb(244 241 236 / 0.36); }
+  button { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+}
+
+@layer components {
+  /* Instrument Serif italic accent — the 15% "light" in headlines. */
+  .serif { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+
+  /* Frosted glass for floating chrome (nav, composer, sheets). Lives in the components layer so any
+     bg-* / border-* utility on the same element overrides it. */
+  .glass {
+    background-color: rgb(15 15 18 / 0.6);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid rgb(255 255 255 / 0.07);
+  }
+
+  /* Photo fallbacks and decorative art: warm stage-light gradients. */
+  .tone-1 { background: radial-gradient(circle at 18% 16%, rgb(255 181 71 / 0.9) 0, transparent 20%), radial-gradient(circle at 84% 28%, rgb(232 103 42 / 0.7) 0, transparent 16%), radial-gradient(circle at 62% 6%, rgb(255 224 160 / 0.55) 0, transparent 9%), radial-gradient(circle at 8% 52%, rgb(224 64 106 / 0.45) 0, transparent 14%), linear-gradient(180deg, #43200f, #1c0e0c 58%, #0b0808); }
+  .tone-2 { background: radial-gradient(circle at 78% 14%, rgb(224 64 106 / 0.85) 0, transparent 20%), radial-gradient(circle at 16% 30%, rgb(184 50 122 / 0.7) 0, transparent 17%), radial-gradient(circle at 40% 8%, rgb(255 181 71 / 0.5) 0, transparent 9%), linear-gradient(180deg, #3a1022, #1a0b14 58%, #0a0709); }
+  .tone-3 { background: radial-gradient(circle at 70% 20%, rgb(140 90 220 / 0.6) 0, transparent 18%), radial-gradient(circle at 20% 12%, rgb(255 181 71 / 0.7) 0, transparent 16%), linear-gradient(180deg, #24163a, #120c18 58%, #09070b); }
+  .tone-4 { background: radial-gradient(circle at 50% 10%, rgb(255 200 110 / 0.8) 0, transparent 16%), radial-gradient(circle at 12% 22%, rgb(232 103 42 / 0.6) 0, transparent 14%), radial-gradient(circle at 88% 40%, rgb(224 64 106 / 0.5) 0, transparent 14%), linear-gradient(180deg, #3d2410, #1b110a 58%, #0a0807); }
+
+  .glow-orb { position: absolute; border-radius: 9999px; pointer-events: none; filter: blur(24px); }
+
+  .kbd { font: inherit; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; background: rgb(255 255 255 / 0.07); border: 1px solid rgb(255 255 255 / 0.08); }
+
+  .typing-dot { width: 6px; height: 6px; border-radius: 9999px; background: var(--color-ink); animation: dot 1s infinite; }
+}
+
+@utility accent-gradient { background-image: linear-gradient(135deg, var(--color-gold), var(--color-ember)); }
+@utility mine-gradient { background-image: linear-gradient(135deg, var(--color-burnt), #a62a52); }
+@utility ring-gradient { background-image: linear-gradient(135deg, var(--color-gold), var(--color-rose)); }
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+/* Space the bottom of scrollable app content so the floating nav never covers it. */
+@utility pb-nav {
+  padding-bottom: calc(68px + 22px + 24px + env(safe-area-inset-bottom));
+  @media (width >= 64rem) { padding-bottom: 40px; }
+}
+@utility bottom-safe { bottom: calc(22px + env(safe-area-inset-bottom)); }
+@utility pb-safe { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+@utility pt-safe { padding-top: env(safe-area-inset-top); }
+
+@keyframes dot { 0%, 60%, 100% { opacity: 0.3; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
+@keyframes glow { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+@keyframes inL { from { opacity: 0; transform: translateX(-90px) rotate(-18deg); } to { opacity: 1; transform: rotate(-8deg); } }
+@keyframes inR { from { opacity: 0; transform: translateX(90px) rotate(18deg); } to { opacity: 1; transform: rotate(7deg); } }
+@keyframes pop { 0% { opacity: 0; transform: scale(0.3); } 70% { opacity: 1; transform: scale(1.15); } 100% { transform: scale(1); } }
+@keyframes up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes spark { 0% { opacity: 0; transform: scale(0.2); } 40% { opacity: 1; } 100% { opacity: 0.8; transform: scale(1); } }
+@keyframes sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}

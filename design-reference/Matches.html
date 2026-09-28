@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Matches</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@1&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#050505;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:#F4F1EC;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.ph{position:absolute;inset:0;overflow:hidden}
+.ph-head{position:absolute;left:50%;top:18%;width:40%;aspect-ratio:1/1.18;transform:translateX(-50%);border-radius:50%;background:#150c0f;box-shadow:inset 6px 5px 12px rgba(255,170,90,.25)}
+.ph-body{position:absolute;left:50%;top:60%;width:96%;height:70%;transform:translateX(-50%);border-radius:48% 48% 0 0;background:#150c0f}
+.t1{background:radial-gradient(circle at 18% 16%,rgba(255,181,71,.9) 0,transparent 30%),radial-gradient(circle at 84% 28%,rgba(232,103,42,.7) 0,transparent 26%),linear-gradient(180deg,#43200f,#1c0e0c)}
+.t2{background:radial-gradient(circle at 78% 14%,rgba(224,64,106,.85) 0,transparent 30%),radial-gradient(circle at 16% 30%,rgba(184,50,122,.7) 0,transparent 26%),linear-gradient(180deg,#3a1022,#1a0b14)}
+.t3{background:radial-gradient(circle at 70% 20%,rgba(140,90,220,.6) 0,transparent 28%),radial-gradient(circle at 20% 12%,rgba(255,181,71,.7) 0,transparent 26%),linear-gradient(180deg,#24163a,#120c18)}
+.t4{background:radial-gradient(circle at 50% 10%,rgba(255,200,110,.8) 0,transparent 26%),radial-gradient(circle at 12% 22%,rgba(232,103,42,.6) 0,transparent 24%),linear-gradient(180deg,#3d2410,#1b110a)}
+.row{transition:background .15s ease}
+.row:hover{background:rgba(255,255,255,.03)}
+.row:focus-visible{outline:2px solid #FFB547;outline-offset:-2px}
+</style>
+</helmet>
+<main style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #050505;">
+  <div aria-hidden="true" style="position: absolute; right: -200px; top: -160px; width: 460px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(224,64,106,.2), transparent 65%); filter: blur(24px);"></div>
+
+  <header style="position: absolute; top: 0; left: 0; right: 0; padding: 24px 20px 0;">
+    <h1 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.035em;">Matches</h1>
+  </header>
+
+  <section aria-labelledby="new-h" style="position: absolute; left: 0; right: 0; top: 88px;">
+    <h2 id="new-h" style="margin: 0 20px 14px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,241,236,.5);">New · 3</h2>
+    <div style="display: flex; gap: 16px; padding: 0 20px; overflow: hidden;">
+      <sc-for list="{{fresh}}" as="m" hint-placeholder-count="4">
+        <a href="Chat.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-decoration: none; width: 72px; flex-shrink: 0;">
+          <span style="width: 72px; height: 72px; border-radius: 50%; padding: 2.5px; box-sizing: border-box; background: {{m.ring}}; box-shadow: {{m.glow}};">
+            <span style="display: block; width: 100%; height: 100%; border-radius: 50%; padding: 2.5px; box-sizing: border-box; background: #050505;">
+              <span style="display: block; position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden;"><span class="ph {{m.tone}}"><span class="ph-head"></span><span class="ph-body"></span></span></span>
+            </span>
+          </span>
+          <span style="font-size: 13px; font-weight: 600; color: rgba(244,241,236,.9);">{{m.name}}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section aria-labelledby="msg-h" style="position: absolute; left: 0; right: 0; top: 246px;">
+    <h2 id="msg-h" style="margin: 0 20px 6px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,241,236,.5);">Messages</h2>
+    <ul style="list-style: none; margin: 0; padding: 0;">
+      <sc-for list="{{convos}}" as="c" hint-placeholder-count="5">
+        <li>
+          <a class="row" href="Chat.dc.html" style="display: flex; align-items: center; gap: 14px; padding: 12px 20px; text-decoration: none;">
+            <span style="position: relative; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; flex-shrink: 0;"><span class="ph {{c.tone}}"><span class="ph-head"></span><span class="ph-body"></span></span></span>
+            <span style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+              <span style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                <span style="font-size: 16px; font-weight: {{c.weight}};">{{c.name}}</span>
+                <span style="font-size: 12px; color: {{c.timeColor}};">{{c.time}}</span>
+              </span>
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <span style="flex-grow: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 14px; color: {{c.msgColor}};">{{c.last}}</span>
+                <sc-if value="{{c.unread}}" hint-placeholder-val="{{ false }}"><span aria-label="Unread" style="width: 9px; height: 9px; border-radius: 50%; background: #FFB547; box-shadow: 0 0 10px rgba(255,181,71,.7); flex-shrink: 0;"></span></sc-if>
+              </span>
+            </span>
+          </a>
+        </li>
+      </sc-for>
+    </ul>
+  </section>
+
+  <nav aria-label="Primary" style="position: absolute; left: 16px; right: 16px; bottom: 22px; height: 68px; border-radius: 24px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: rgba(15,15,18,.62); backdrop-filter: blur(24px) saturate(140%); border: 1px solid rgba(255,255,255,.07); box-shadow: 0 20px 60px rgba(0,0,0,.5);">
+    <a href="Discover.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: rgba(244,241,236,.5); text-decoration: none; font-size: 11px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"></path></svg>Discover</a>
+    <a href="Matches.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #F4F1EC; text-decoration: none; font-size: 11px; font-weight: 600; position: relative;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFB547"><path d="M12 20s-7-4.3-9-8.6C1.7 8.4 3.5 5 6.8 5c1.9 0 3.4 1 4.2 2.5h2C13.8 6 15.3 5 17.2 5c3.3 0 5.1 3.4 3.8 6.4-2 4.3-9 8.6-9 8.6z"></path></svg>Matches
+      <span style="position: absolute; bottom: 6px; width: 16px; height: 3px; border-radius: 2px; background: #FFB547; box-shadow: 0 0 10px rgba(255,181,71,.8);"></span></a>
+    <a href="Chat.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: rgba(244,241,236,.5); text-decoration: none; font-size: 11px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path></svg>Chats</a>
+    <a href="Profile.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: rgba(244,241,236,.5); text-decoration: none; font-size: 11px; font-weight: 600;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg>Profile</a>
+  </nav>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const warm = 'linear-gradient(135deg,#FFC15E,#E0406A)';
+    const quiet = 'rgba(255,255,255,.14)';
+    const fresh = [
+      { name: 'Ishaan', tone: 't3', ring: warm, glow: '0 0 24px rgba(224,64,106,.45)' },
+      { name: 'Riya', tone: 't2', ring: warm, glow: '0 0 24px rgba(224,64,106,.35)' },
+      { name: 'Kabir', tone: 't4', ring: warm, glow: 'none' },
+      { name: 'Tara', tone: 't1', ring: quiet, glow: 'none' }
+    ];
+    const rows = [
+      ['Ananya', 't1', 'Okay but which song do we open with?', '2m', true],
+      ['Dev', 't4', 'Food stalls first. Non-negotiable.', '18m', true],
+      ['Sana', 't2', 'You: See you near the main stage', '1h', false],
+      ['Arjun', 't3', 'Haha fair. My dandiya skills are a 4', '3h', false],
+      ['Nisha', 't1', 'You: Traditional fit is locked in', 'Tue', false]
+    ];
+    const convos = rows.map((r) => ({
+      name: r[0], tone: r[1], last: r[2], time: r[3], unread: r[4],
+      weight: r[4] ? 700 : 600,
+      msgColor: r[4] ? 'rgba(244,241,236,.88)' : 'rgba(244,241,236,.5)',
+      timeColor: r[4] ? '#FFB547' : 'rgba(244,241,236,.4)'
+    }));
+    return { fresh, convos };
+  }
+}
+</script>
+</body>
+</html>
