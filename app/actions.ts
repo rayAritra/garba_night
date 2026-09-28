@@ -65,8 +65,14 @@ export async function saveProfile(payload: unknown, photos: string[]) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Please sign in again." };
   const p = parsed.data;
-  const { error } = await supabase.from("profiles").update({ name:p.name, date_of_birth:p.dateOfBirth, gender:p.gender, interested_in:p.interestedIn, year:p.year, department:p.department || null, bio:p.bio, instagram_username:p.instagram || null, whatsapp_number:p.whatsapp || null, share_instagram:p.shareInstagram, share_whatsapp:p.shareWhatsapp, onboarding_completed:true }).eq("id",user.id);
+  const fields = { name:p.name, date_of_birth:p.dateOfBirth, gender:p.gender, interested_in:p.interestedIn, year:p.year, department:p.department || null, bio:p.bio, instagram_username:p.instagram || null, whatsapp_number:p.whatsapp || null, share_instagram:p.shareInstagram, share_whatsapp:p.shareWhatsapp, onboarding_completed:true };
+  const { data: updated, error } = await supabase.from("profiles").update(fields).eq("id",user.id).select("id");
   if (error) return { error: error.message };
+  // The sign-up trigger normally creates this row; if it's missing (e.g. deleted by hand), recreate it.
+  if (!updated?.length) {
+    const { error: insertError } = await supabase.from("profiles").insert({ id:user.id, ...fields });
+    if (insertError) return { error: "Your profile record is missing. Ask the organiser to run migration 0004, then try again." };
+  }
   const { data: interests, error: interestError } = await supabase.from("interests").select("id,name").in("name",p.interests);
   if (interestError) return { error: interestError.message };
   await supabase.from("profile_interests").delete().eq("profile_id",user.id);
