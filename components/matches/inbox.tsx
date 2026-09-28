@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import type { MatchSummary } from "@/lib/types";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import type { LikeReceived, MatchSummary } from "@/lib/types";
+import { LikesYou } from "@/components/matches/likes-you";
 import { cn, shortStamp } from "@/lib/utils";
 import { useInbox } from "@/components/layout/inbox-provider";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -69,24 +72,48 @@ function useInboxState() {
 }
 
 /** Matches.html: fresh matches as rings, then conversations. */
-export function MatchesView() {
+export function MatchesView({ initialLikes }: { initialLikes: LikeReceived[] | null }) {
   const { matches, error, retry } = useInboxState();
+  const [likes, setLikes] = useState<LikeReceived[]>(initialLikes ?? []);
+  const likesAvailable = initialLikes !== null;
+
+  // Swipes aren't broadcast to their target, so re-check "Likes you" whenever the tab comes back.
+  useEffect(() => {
+    if (!likesAvailable) return;
+    const onVisible = () => {
+      if (document.visibilityState !== "visible") return;
+      void createClient()
+        .rpc("get_likes_received")
+        .then(({ data, error: rpcError }) => {
+          if (!rpcError) setLikes((data ?? []) as LikeReceived[]);
+        });
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => document.removeEventListener("visibilitychange", onVisible);
+  }, [likesAvailable]);
+
+  const likesRow = <LikesYou likes={likes} onAnswered={(id) => setLikes((list) => list.filter((p) => p.id !== id))} />;
+
   if (!matches) return error ? <ErrorState className="mt-24" action={retry} /> : <ListSkeleton />;
   if (!matches.length) {
     return (
-      <EmptyState
-        className="mt-20"
-        icon={<HeartIcon size={30} />}
-        title="No matches yet."
-        body="When someone you liked likes you back, they’ll show up here."
-        action={<ButtonLink href="/discover" size="md">Start discovering</ButtonLink>}
-      />
+      <>
+        {likesRow}
+        <EmptyState
+          className="mt-20"
+          icon={<HeartIcon size={30} />}
+          title={likes.length ? "Like them back?" : "No matches yet."}
+          body={likes.length ? "Tap someone above to see their card. Like them back and it’s a match." : "When someone you liked likes you back, they’ll show up here."}
+          action={likes.length ? undefined : <ButtonLink href="/discover" size="md">Start discovering</ButtonLink>}
+        />
+      </>
     );
   }
   const fresh = matches.filter((m) => !m.latest_message);
   const talking = matches.filter((m) => m.latest_message);
   return (
     <>
+      {likesRow}
       {fresh.length ? (
         <section aria-labelledby="new-h" className="mt-6">
           <SectionLabel id="new-h" className="mx-5 mb-3.5 text-[13px] lg:mx-4">

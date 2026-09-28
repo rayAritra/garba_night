@@ -58,3 +58,6 @@ export type ChatMessage = {
   created_at: string;
   read_at: string | null;
 };
+
+/** Someone who liked the viewer and is still waiting for an answer (`get_likes_received`). */
+export type LikeReceived = DiscoverProfile & { liked_at: string };
