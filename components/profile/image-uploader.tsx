@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
-import { compressImage, uploadPhoto } from "@/lib/photos";
+import { compressImage, looksLikeImage, uploadPhoto } from "@/lib/photos";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import { CloseIcon, PlusIcon } from "@/components/ui/icons";
@@ -71,9 +71,10 @@ export function ImageUploader({
         setUploads((list) => [...list, { id, preview, progress: 0 }]);
         const update = (patch: Partial<Upload>) => setUploads((list) => list.map((u) => (u.id === id ? { ...u, ...patch } : u)));
         try {
-          if (!file.type.startsWith("image/")) throw new Error("That file isn’t a photo.");
+          if (!looksLikeImage(file)) throw new Error("That file isn’t a photo. Pick a JPG, PNG or HEIC.");
           const blob = await compressImage(file);
-          const path = `${userId}/${id}.${blob.type === "image/webp" ? "webp" : "jpg"}`;
+          const ext = blob.type === "image/webp" ? "webp" : blob.type === "image/png" ? "png" : "jpg";
+          const path = `${userId}/${id}.${ext}`;
           await uploadPhoto(blob, path, token, (fraction) => update({ progress: fraction }));
           onChange([...valueRef.current, path]);
           valueRef.current = [...valueRef.current, path];
@@ -271,7 +272,7 @@ export function ImageUploader({
       <input
         ref={fileInput}
         type="file"
-        accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+        accept="image/*,.heic,.heif"
         multiple
         className="sr-only"
         tabIndex={-1}

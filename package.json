@@ -16,6 +16,7 @@
     "@supabase/supabase-js": "latest",
     "canvas-confetti": "latest",
     "clsx": "latest",
+    "heic-to": "^1.5.2",
     "lucide-react": "latest",
     "motion": "latest",
     "next": "latest",
