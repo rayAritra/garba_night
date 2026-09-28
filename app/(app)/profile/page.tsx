@@ -6,6 +6,7 @@ import { Tag } from "@/components/ui/chip";
 import { GlowOrb, SectionLabel } from "@/components/ui/glass-panel";
 import { EditIcon, GearIcon } from "@/components/ui/icons";
 import { ProfilePreview } from "@/components/profile/profile-preview";
+import { CreatorCredit } from "@/components/ui/creator-credit";
 
 export const metadata: Metadata = { title: "Profile" };
 
@@ -59,6 +60,7 @@ export default async function ProfilePage() {
           <EditIcon size={17} />
           Edit profile
         </ButtonLink>
+        <CreatorCredit className="mt-4" />
       </section>
     </main>
   );

@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/photo";
 import { Wordmark } from "@/components/ui/glass-panel";
 import { useInbox } from "@/components/layout/inbox-provider";
+import { CreatorCredit } from "@/components/ui/creator-credit";
 import {
   ChatFilledIcon,
   ChatIcon,
@@ -91,7 +92,8 @@ function Sidebar() {
           );
         })}
       </nav>
-      <Link href="/profile" className="mt-auto flex items-center gap-3 rounded-md px-3.5 py-2.5 no-underline hover:bg-white/4">
+      <CreatorCredit variant="pill" className="mt-auto self-start text-xs" />
+      <Link href="/profile" className="-mt-5 flex items-center gap-3 rounded-md px-3.5 py-2.5 no-underline hover:bg-white/4">
         <Avatar path={viewer.photo} name={viewer.name} seed={viewer.id} size={40} />
         <span className="flex flex-col">
           <span className="text-sm font-bold">{viewer.name}</span>

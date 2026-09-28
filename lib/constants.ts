@@ -19,10 +19,16 @@ export const EVENT = {
   college: "MAKAUT",
   venue: "Maulana Abul Kalam Azad University of Technology",
   campus: "West Bengal",
-  startsAt: "2026-10-30T19:00:00+05:30",
+  startsAt: "2026-09-30T17:00:00+05:30",
   timeZone: "Asia/Kolkata",
   dressCode: "Traditional",
 };
 
-/** Credit shown in the landing page footer. */
-export const CREATOR = { name: "Aritra Ray", github: "https://github.com/rayAritra" };
+/** The app's maker, credited on the landing page, auth screens, sidebar, profile and settings. */
+export const CREATOR = {
+  name: "Aritra Ray",
+  instagram: "imaritra05",
+  phone: "+919732811889",
+  phoneLabel: "+91 97328 11889",
+  github: "https://github.com/rayAritra",
+};

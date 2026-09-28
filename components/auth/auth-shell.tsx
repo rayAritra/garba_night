@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { GlowOrb } from "@/components/ui/glass-panel";
 import { BackIcon } from "@/components/ui/icons";
+import { CreatorCredit } from "@/components/ui/creator-credit";
 
 /** Signup.html frame: back link, big headline with a serif accent, lede, then the form. */
 export function AuthShell({ title, lede, back = "/", children }: { title: ReactNode; lede: string; back?: string; children: ReactNode }) {
@@ -20,6 +21,7 @@ export function AuthShell({ title, lede, back = "/", children }: { title: ReactN
           <p className="m-0 text-[15px] leading-normal text-ink/64">{lede}</p>
         </section>
         {children}
+        <CreatorCredit variant="pill" className="mx-auto mb-[max(16px,env(safe-area-inset-bottom))]" />
       </main>
     </div>
   );

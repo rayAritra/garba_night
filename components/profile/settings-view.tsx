@@ -13,6 +13,7 @@ import { Button, IconLink } from "@/components/ui/button";
 import { Switch } from "@/components/ui/form-field";
 import { BackIcon, ChevronRightIcon } from "@/components/ui/icons";
 import { useToast } from "@/components/ui/toast";
+import { CreatorCredit } from "@/components/ui/creator-credit";
 
 export type BlockedProfile = { id: string; name: string | null };
 
@@ -179,6 +180,8 @@ export function SettingsView(props: Props) {
             Delete account
           </button>
         </Group>
+
+        <CreatorCredit />
       </div>
 
       <BottomSheet open={confirmDelete} onClose={() => setConfirmDelete(false)} title="Delete account">
